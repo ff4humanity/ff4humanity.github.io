@@ -1,0 +1,42 @@
+html,
+body,
+.wrapper {
+  overflow: hidden;
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+}
+
+.wrapper iframe {
+  flex: 1;
+  border: none;
+}
+
+.header {
+  display: flex;
+  font-size: 150%;
+  border-bottom: 1px solid blue;
+  user-select: none;
+}
+
+.header > * {
+  flex: 1;
+}
+
+.return {
+}
+
+.title {
+  text-align: center;
+}

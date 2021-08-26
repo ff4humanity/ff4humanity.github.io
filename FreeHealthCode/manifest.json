@@ -1,0 +1,16 @@
+{
+  "name": "苏康码",
+  "short_name": "苏康码",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "src/icon4.png",
+      "sizes": "400x400",
+      "type": "image/png"
+    }
+  ],
+  "scope": "/FreeHealthCode/",
+  "start_url": "/FreeHealthCode/"
+}
