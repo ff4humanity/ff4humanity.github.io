@@ -6,8 +6,8 @@ workbox.setConfig({
 });
 
 const { precacheAndRoute } = workbox.precaching;
-const VERSION = 1;
-const URL_PREFIX = "/FreeHealthCode";
+const VERSION = 2;
+const URL_PREFIX = "";
 
 const FILES = [
   "/",
