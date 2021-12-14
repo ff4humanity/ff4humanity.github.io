@@ -12,6 +12,8 @@ window.addEventListener("load", () => {
     foreground: "green",
   });
 
+  $("#now-time").html(format(new Date()));
+  document.querySelector("#now-time").classList.remove("hidden");
   setInterval(function () {
     $("#now-time").html(format(new Date()));
   }, 500);

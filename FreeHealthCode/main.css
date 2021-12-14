@@ -16,6 +16,10 @@ body{
 	display: none!important;
 }
 
+.hidden {
+	visibility: hidden;
+}
+
 /* 头部 */
 .icons{
 	display: flex;
