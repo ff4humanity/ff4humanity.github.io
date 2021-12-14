@@ -1,5 +1,5 @@
 document.querySelector(".header").addEventListener("dblclick", toggleFullScreen);
-navigator.serviceWorker.register("/FreeHealthCode/service-worker.js", { scope: "/FreeHealthCode/" });
+navigator.serviceWorker.register("/service-worker.js", { scope: "/" });
 
 function toggleFullScreen() {
   if (!document.fullscreenElement) {

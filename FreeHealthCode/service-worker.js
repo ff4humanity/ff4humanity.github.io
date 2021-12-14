@@ -6,7 +6,7 @@ workbox.setConfig({
 });
 
 const { precacheAndRoute } = workbox.precaching;
-const VERSION = 2;
+const VERSION = 3;
 const URL_PREFIX = "";
 
 const FILES = [

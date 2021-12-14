@@ -26,26 +26,13 @@
         <div class="pic">
           <div class="icons"></div>
           <div class="code-name">
-            <div>
-              <span>姓</span>
-              <span>名</span>
+            <div id="code-name">刘洋</div>
+            <div id="code-id">
+              <span id="code1"></span>******<span id="code2"></span>
+              <script>
+                setPersonalInfo();
+              </script>
             </div>
-            <span>:</span>
-            <span id="code-name">刘洋</span>
-          </div>
-          <div class="code-id">
-            <div>
-              <span>证</span>
-              <span>件</span>
-              <span>号</span>
-            </div>
-            <span>:</span>
-            <span id="code-id">
-              <span id="code1"></span>********<span id="code2"></span>
-            </span>
-            <script>
-              setPersonalInfo();
-            </script>
           </div>
         </div>
         <div class="code-layout">
@@ -72,85 +59,56 @@
           </div>
         </div>
         <div class="gwyxckcx">
+          <div class="shadow-layout">
+            <div class="gwyxck-btn">点击核验</div>
+            <p class="gwyxck-name">国务院行程卡查询</p>
+            <div class="gwyxck-btns">今日未核验</div>
+            <p class="gwyxck-tip1 hide">您14天内未到访过中高风险地区所在城市</p>
+            <p class="gwyxck-tip2 hide">
+              您14天内到达或途径过中高风险地区所在城市(不表示实际到访过这些中高风险地区)
+            </p>
+          </div>
+        </div>
+        <div class="uncityData bottom-layout">
 					<div class="shadow-layout">
-						<div class="gwyxck-btn">点击核验</div>
-						<p class="gwyxck-name">国务院行程卡查询</p>
-						<div class="gwyxck-btns">今日未核验</div>
-						<p class="gwyxck-tip1 hide">您14天内未到访过中高风险地区所在城市</p>
-						<p class="gwyxck-tip2 hide">您14天内到达或途径过中高风险地区所在城市(不表示实际到访过这些中高风险地区)</p>
+						<div class="bottoms-btns">
+							<div id="hsjcJSBtn">
+								<div class="bottoms-pic hs"></div>
+								<p>核酸检测</br>查询(省内)</p>
+							</div>
+							<div id="hsjcBtn">
+								<div class="bottoms-pic kangti"></div>
+								<p>核酸/抗体</br>检测查询(全国)</p>
+							</div>
+							<div id="xingchengBtn">
+								<div class="bottoms-pic xingcheng"></div>
+								<p>通信大数据</br>行程卡</p>
+							</div>
+							<div id="xgymBtn">
+								<div class="bottoms-pic yimiao"></div>
+								<p>新冠疫苗</br>接种查询(省内)</p>
+							</div>
+						</div>
+						<div class="bottoms-btns">
+							<div id="reSubmit">
+								<div class="bottoms-pic updata"></div>
+								<p>信息更新</p>
+							</div>
+							<div id="goAdd">
+								<div class="bottoms-pic addhea"></div>
+								<p>健康申报</p>
+							</div>
+							<div id="addChildBtn">
+								<div class="bottoms-pic addchild"></div>
+								<p>家庭成员</p>
+							</div>
+							<div id="queryChinaBtn">
+								<div class="bottoms-pic guo"></div>
+								<p>国家防疫</br>健康信息码</p>
+							</div>
+						</div>
 					</div>
 				</div>
-        <div class="uncityData bottom-layout">
-          <div class="shadow-layout">
-            <div class="bottoms-btns">
-              <div id="queryChinaBtn">
-                <div class="bottoms-pic guo"></div>
-                <p>
-                  国家防疫
-                  <br />
-                  健康信息码
-                </p>
-              </div>
-              <div id="hsjcBtn">
-                <div class="bottoms-pic kangti"></div>
-                <p>
-                  核酸/抗体
-                  <br />
-                  检测查询(全国)
-                </p>
-              </div>
-              <div id="hsjcJSBtn">
-                <div class="bottoms-pic hs"></div>
-                <p>
-                  核酸检测
-                  <br />
-                  查询(省内)
-                </p>
-              </div>
-              <div id="xgymBtn">
-                <div class="bottoms-pic yimiao"></div>
-                <p>
-                  新冠疫苗
-                  <br />
-                  接种查询(省内)
-                </p>
-              </div>
-            </div>
-            <div class="bottoms-btns">
-              <div id="addChildBtn">
-                <div class="bottoms-pic addchild"></div>
-                <p>家庭成员</p>
-              </div>
-              <div id="reSubmit">
-                <div class="bottoms-pic updata"></div>
-                <p>信息更新</p>
-              </div>
-              <div id="goAdd">
-                <div class="bottoms-pic addhea"></div>
-                <p>健康申报</p>
-              </div>
-              <div id="xingchengBtn">
-                <div class="bottoms-pic xingcheng"></div>
-                <p>
-                  通信大数据
-                  <br />
-                  行程卡
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="cityData hide">
-          <div class="tips">
-            <p class="love hide"></p>
-            <p class="star"></p>
-            信 息 提 示
-          </div>
-          <p class="red">
-            &nbsp;&nbsp;&nbsp;&nbsp;如需使用苏康码相关功能，请
-            <span id="cityDataSubmit">更新信息</span>
-          </p>
-        </div>
         <p class="sjly">
           <a
             href="http://www.jszwfw.gov.cn/jmopen/webapp/html5/sjly/index.html"

@@ -1,11 +1,15 @@
 window.addEventListener("load", () => {
-  var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=fuckyou";
+  // text length: 160-180
+  var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
+    170,
+    encodeURIComponent("Liberate Hong Kong, the revolution of our times")
+  );
   $("#output").qrcode({
     render: "canvas",
     text: o,
     width: "230",
     height: "230",
-    foreground: "green"
+    foreground: "green",
   });
 
   setInterval(function () {
@@ -89,7 +93,7 @@ function setPersonalInfo() {
 function displayPersonalInfo(name, code) {
   name = name || "刘洋";
   code = code || "";
-  let code1 = code.length >= 5 ? code.slice(0, 2) : "32";
+  let code1 = code.length >= 6 ? code.slice(0, 3) : "320";
   let code2 = code.length >= 3 ? code.slice(-3) : "042";
   document.querySelector("#code-name").innerHTML = name;
   document.querySelector("#code1").innerHTML = code1;

@@ -11,6 +11,6 @@
       "type": "image/png"
     }
   ],
-  "scope": "/FreeHealthCode/",
-  "start_url": "/FreeHealthCode/"
+  "scope": "/",
+  "start_url": "/"
 }

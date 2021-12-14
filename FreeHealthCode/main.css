@@ -19,36 +19,34 @@ body{
 /* 头部 */
 .icons{
 	display: flex;
-	height: 45px;
+	height: 35px;
 	margin-top: 5px;
 }
 .icons div{
-	line-height: 40px;
+	line-height: 30px;
 	margin-right: 11px;
-	font-size: 28px;
+	font-size: 20px;
 	font-weight: 700;
+	color: #bff5ff;
 }
 .icon{
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
 	background: url(./src/icon4.png) no-repeat;
-	background-size: 40px 40px;
+	background-size: 30px 30px;
 }
 .pic{
 	width: 100%;
-	height: 140px;
+	height: 100px;
 	position: relative;
 	color: #fff;
 	padding: 14px 14px;
 }
-
 .title-pic{
 	width: 100%;
-	height: 140px;
-	background: url(./src/pic.png) no-repeat;
-	background-size: 100% 160px;
-	background-position: 0px -6px;
+	height: 100px;
+	background-color: #3489eb;
 	position: absolute;
 	color: #fff;
 	padding: 14px 14px;
@@ -74,7 +72,7 @@ body{
 #now-time{
 	margin-block-start: 0em;
 	margin-block-end: 0em;
-	font-size: 30px;
+	font-size: 42px;
 	font-weight: 700;
 	margin-bottom: 0;
 	margin-top: 5px;
@@ -104,6 +102,36 @@ body{
 
 .code-id>span:nth-child(2),.code-name>span:nth-child(2){
 	padding-right: 7px; 
+}
+
+.code-name{
+	padding: 0px 0px;
+	font-size: 20px;
+	line-height: 36px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.code-name{
+	display: flex;
+	padding-left: 40px;
+}
+.code-name div{
+	width: 50%;
+}
+.code-name>div:nth-child(1){
+	overflow:hidden;
+	text-overflow :ellipsis; 
+	white-space :nowrap; 
+	overflow : hidden;
+}
+.code-name >div:nth-child(2){
+	text-align: right;
+	overflow:hidden;
+	text-overflow :ellipsis; 
+	white-space :nowrap; 
+	overflow : hidden; 
 }
 
 /* 展码页面 */
@@ -145,7 +173,7 @@ body{
 	transform: translate(-25px);
 	position: absolute;
 	z-index: 10;
-	top: 130px;
+	top: 140px;
 	background: url(./src/img3.png) no-repeat;
 	background-size: 100% 100%;
 	background-position: 0px 0px;
@@ -175,9 +203,9 @@ body{
 	padding: 7px 7px;
 }
 #ymjz{
-	height: 300px;
-	width: 300px;
-	margin: -16px auto 7px;
+	height: 310px;
+	/* width: 300px; */
+	margin: -35px auto 7px;
 	padding: 43px 30px;
 	position: relative;
 }
@@ -194,8 +222,8 @@ body{
 	top: 0px;
 }
 #output{
-	height: 230px;
-	width: 230px;
+	height: 250px;
+	width: 250px;
 	padding: 0px;
 	margin: 0 auto;
 	display: -webkit-flex;
