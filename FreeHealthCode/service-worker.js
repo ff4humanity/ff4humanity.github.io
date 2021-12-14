@@ -2,12 +2,12 @@ importScripts(
   "https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js"
 );
 workbox.setConfig({
-  debug: true
+  debug: true,
 });
 
 const { precacheAndRoute } = workbox.precaching;
-const VERSION = 3;
-const URL_PREFIX = "";
+const VERSION = 4;
+const URL_PREFIX = location.pathname.slice(0, -"service-worker.js".length - 1);
 
 const FILES = [
   "/",
@@ -36,12 +36,12 @@ const FILES = [
   "/src/updata.png",
   "/src/xingcheng.png",
   "/src/yimiao.png",
-  "/src/ymjz2.png"
+  "/src/ymjz2.png",
 ];
 
 precacheAndRoute(
   FILES.map((url) => ({
     revision: VERSION,
-    url: URL_PREFIX + url
+    url: URL_PREFIX + url,
   }))
 );
