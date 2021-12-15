@@ -11,6 +11,6 @@
       "type": "image/png"
     }
   ],
-  "scope": "/",
-  "start_url": "/"
+  "scope": "./",
+  "start_url": "index.html"
 }
