@@ -101,3 +101,18 @@ function displayPersonalInfo(name, code) {
   document.querySelector("#code1").innerHTML = code1;
   document.querySelector("#code2").innerHTML = code2;
 }
+
+function setXc() {
+  document.querySelector(".gwyxckcx").addEventListener("dblclick", (e) => {
+    let xc = (parseInt(localStorage.getItem("xc") || 0) + 1) % 3;
+    localStorage.setItem("xc", xc);
+    displayXc();
+  });
+  displayXc();
+}
+
+function displayXc() {
+  let xc = parseInt(localStorage.getItem("xc") || 0);
+  document.querySelector(".gwyxckcx").classList.remove("xc-0", "xc-1", "xc-2");
+  document.querySelector(".gwyxckcx").classList.add("xc-" + xc);
+}

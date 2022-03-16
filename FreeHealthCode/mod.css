@@ -1,4 +1,24 @@
-
-#code-name, #code-id {
+#code-name,
+#code-id {
   user-select: none;
+}
+
+.gwyxck-btn,
+.gwyxck-btns,
+.gwyxck-tip1,
+.gwyxck-tip2 {
+  display: none;
+}
+
+.xc-0 .gwyxck-btn,
+.xc-0 .gwyxck-btns {
+  display: block;
+}
+
+.xc-1 .gwyxck-tip1 {
+  display: block;
+}
+
+.xc-2 .gwyxck-tip2 {
+  display: block;
 }
