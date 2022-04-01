@@ -1,0 +1,125 @@
+<html lang="en" style="font-size: 50px" class="">
+  <!-- https://xc.caict.ac.cn/ -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"
+    />
+    <title>通信大数据行程卡</title>
+    <link rel="stylesheet" href="xck.css" />
+    <link rel="stylesheet" href="mod.css" />
+    <script src="mod.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div data-v-331d83c8="" class="result-wrap">
+        <div data-v-331d83c8="" class="bg-pic1 greenBg">
+          <div data-v-331d83c8="" class="banner-img-holder imgholder2"></div>
+          <div data-v-331d83c8="" class="div-main">
+            <div data-v-331d83c8="" class="top green"></div>
+            <p data-v-331d83c8="" class="hidden-tel">
+              <span id="phone"></span>的动态行程卡
+            </p>
+            <script>
+              setPhone();
+            </script>
+            <p data-v-331d83c8="" class="update">
+              更新于：<span id="update-time"></span>
+            </p>
+            <div data-v-331d83c8="" class="info">
+              <div data-v-331d83c8="" class="img-holder green-bg">
+                <img
+                  data-v-331d83c8=""
+                  src="src/gif_green.aa2c099c.gif"
+                  alt=""
+                  class="qr-img"
+                />
+              </div>
+            </div>
+            <div data-v-331d83c8="" class="bott">
+              您于前14天内到达或途经：<span id="area"></span>
+            </div>
+            <script>
+              setArea();
+            </script>
+          </div>
+          <!----><!---->
+          <div data-v-331d83c8="" class="tip">
+            结果包含您在前14天内到访的国家(地区)与停留4小时以上的国内城市<br
+              data-v-331d83c8=""
+            /><br data-v-331d83c8="" />
+            色卡仅对到访地作提醒，不关联健康状况
+          </div>
+          <div data-v-331d83c8="" class="foot-box">
+            <footer data-v-0a8392f0="" data-v-331d83c8="" class="footer-comp">
+              <div data-v-0a8392f0="">
+                <p data-v-0a8392f0="" style="font-size: 0.24rem; color: white">
+                  ————————— 本服务联合提供 —————————
+                </p>
+              </div>
+              <div data-v-0a8392f0="" class="caict">
+                <img
+                  data-v-0a8392f0=""
+                  src="src/222.e8d1724d.png"
+                  alt="caict"
+                />
+              </div>
+              <div data-v-0a8392f0="" style="padding-top: 0.15rem">
+                <a data-v-0a8392f0="" style="font-size: 0.24rem; color: white"
+                  >客服热线：</a
+                ><a
+                  data-v-0a8392f0=""
+                  href="tel:10000"
+                  style="font-size: 0.24rem; color: white"
+                  >10000</a
+                >
+                <a data-v-0a8392f0="" style="font-size: 0.24rem; color: white"
+                  >/</a
+                ><a
+                  data-v-0a8392f0=""
+                  href="tel:10086"
+                  style="font-size: 0.24rem; color: white"
+                >
+                  10086</a
+                ><a data-v-0a8392f0="" style="font-size: 0.24rem; color: white">
+                  /
+                </a>
+                <a
+                  data-v-0a8392f0=""
+                  href="tel:10010"
+                  style="font-size: 0.24rem; color: white"
+                  >10010</a
+                >
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mint-msgbox-wrapper" style="position: absolute; z-index: 2001">
+      <div class="mint-msgbox" style="display: none">
+        <div class="mint-msgbox-header">
+          <div class="mint-msgbox-title">提示</div>
+        </div>
+        <div class="mint-msgbox-content">
+          <div class="mint-msgbox-message">网络错误！</div>
+          <div class="mint-msgbox-input" style="display: none">
+            <input placeholder="" type="text" />
+            <div class="mint-msgbox-errormsg" style="visibility: hidden"></div>
+          </div>
+        </div>
+        <div class="mint-msgbox-btns">
+          <button
+            class="mint-msgbox-btn mint-msgbox-cancel"
+            style="display: none"
+          >
+            取消
+          </button>
+          <button class="mint-msgbox-btn mint-msgbox-confirm">确定</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

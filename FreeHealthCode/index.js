@@ -21,3 +21,9 @@
     }
   }
 })();
+
+function setTitle(title) {
+  title = title || "苏康码";
+  document.title = title;
+  document.querySelector(".title").innerHTML = title;
+}

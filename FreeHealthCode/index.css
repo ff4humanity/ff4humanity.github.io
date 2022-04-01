@@ -28,6 +28,7 @@ body,
   font-size: 150%;
   border-bottom: 1px solid blue;
   user-select: none;
+  padding: 5px 0;
 }
 
 .header > * {
@@ -35,8 +36,10 @@ body,
 }
 
 .return {
+  visibility: hidden;
 }
 
 .title {
+  flex: 100;
   text-align: center;
 }

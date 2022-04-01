@@ -1,22 +1,35 @@
 window.addEventListener("load", () => {
-  // text length: 160-180
-  var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
-    170,
-    encodeURIComponent("Liberate Hong Kong, the revolution of our times")
-  );
-  $("#output").qrcode({
-    render: "canvas",
-    text: o,
-    width: "230",
-    height: "230",
-    foreground: "green",
-  });
+  let page = location.href.indexOf("/xck.html") != -1 ? 1 : 0;
+  try {
+    window.top.setTitle(page ? "通信大数据行程卡" : "苏康码");
+  } catch (e) {}
 
-  $("#now-time").html(format(new Date()));
-  document.querySelector("#now-time").classList.remove("hidden");
-  setInterval(function () {
+  if (page) {
+    document.querySelector("#update-time").innerHTML = format2();
+  } else {
+    // text length: 160-180
+    var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
+      170,
+      encodeURIComponent("Liberate Hong Kong, the revolution of our times")
+    );
+    $("#output").qrcode({
+      render: "canvas",
+      text: o,
+      width: "230",
+      height: "230",
+      foreground: "green",
+    });
+
     $("#now-time").html(format(new Date()));
-  }, 500);
+    document.querySelector("#now-time").classList.remove("hidden");
+    setInterval(function () {
+      $("#now-time").html(format(new Date()));
+    }, 500);
+
+    document.querySelector("#xingchengBtn").addEventListener("click", () => {
+      window.location.href = "xck.html";
+    });
+  }
 });
 
 function getBeijingTime() {
@@ -48,6 +61,17 @@ function format(e) {
     ":" +
     i.toString().padStart(2, "0")
   );
+}
+
+function format2(a) {
+  a = a || getBeijingTime();
+  let yyyy = a.getFullYear(),
+    MM = (a.getMonth() + 1).toString().padStart(2, "0"),
+    dd = a.getDate().toString().padStart(2, "0"),
+    hh = a.getHours().toString().padStart(2, "0"),
+    mm = a.getMinutes().toString().padStart(2, "0"),
+    ss = a.getSeconds().toString().padStart(2, "0");
+  return `${yyyy}.${MM}.${dd} ${hh}:${mm}:${ss}`;
 }
 
 function setPersonalInfo() {
@@ -104,6 +128,7 @@ function displayPersonalInfo(name, code) {
 
 function setXc() {
   document.querySelector(".gwyxckcx").addEventListener("dblclick", (e) => {
+    e.stopPropagation();
     let xc = (parseInt(localStorage.getItem("xc") || 0) + 1) % 3;
     localStorage.setItem("xc", xc);
     displayXc();
@@ -115,4 +140,45 @@ function displayXc() {
   let xc = parseInt(localStorage.getItem("xc") || 0);
   document.querySelector(".gwyxckcx").classList.remove("xc-0", "xc-1", "xc-2");
   document.querySelector(".gwyxckcx").classList.add("xc-" + xc);
+}
+
+function setArea() {
+  document.querySelector("#area").addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    let area = prompt("更改区域为：", localStorage.getItem("area") || "");
+    if (area != null && area != localStorage.getItem("area")) {
+      localStorage.setItem("area", area);
+      displayArea();
+    }
+  });
+  displayArea();
+}
+
+function displayArea() {
+  let area = localStorage.getItem("area") || "江苏省南京市";
+  let xc = parseInt(localStorage.getItem("xc") || 0);
+  document.querySelector("#area").innerHTML =
+    xc != 2
+      ? area
+      : `${area}*（注：*表示当前该城市存在中风险或高风险地区，并不表示用户实际到访过这些中高风险地区。）`;
+}
+
+function setPhone() {
+  document.querySelector("#phone").addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    let phone = prompt("更改手机号为：", localStorage.getItem("phone") || "");
+    if (phone != null && phone != localStorage.getItem("phone")) {
+      localStorage.setItem("phone", phone);
+      displayPhone();
+    }
+  });
+  displayPhone();
+}
+
+function displayPhone() {
+  let phone = localStorage.getItem("phone") || "15000000042";
+  document.querySelector("#phone").innerHTML = `${phone.slice(
+    0,
+    3
+  )}****${phone.slice(-4)}`;
 }
