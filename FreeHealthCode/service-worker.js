@@ -19,6 +19,11 @@ const FILES = [
   "/index.html",
   "/main.html",
   "/main.css",
+  "/qr.html",
+  "/qr.css",
+  "/unit.html",
+  "/unit.css",
+  "/context-menu.js",
   "/xck.css",
   "/xck.html",
   "/manifest.json",
@@ -42,6 +47,8 @@ const FILES = [
   "/src/222.e8d1724d.png",
   "/src/gif_green.aa2c099c.gif",
   "/src/img_bg@3x.0055ee09.2ae09503.png",
+  "/src/home.svg",
+  "/src/qr_scan.svg",
 ];
 
 precacheAndRoute(

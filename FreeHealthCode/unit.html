@@ -1,0 +1,365 @@
+<head lang="en">
+  <meta charset="utf-8" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="yes" name="apple-touch-fullscreen" />
+  <!-- <meta name="format-detection" content="telephone=no,email=no"> -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>场所码</title>
+  <link rel="stylesheet" type="text/css" href="unit.css" />
+  <script src="context-menu.js"></script>
+  <script src="mod.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .root {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      /* display: flex; */
+      /* position: fixed; */
+      /* top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0; */
+    }
+
+    .content {
+      width: 100vw;
+      height: 100vh;
+      padding-bottom: 4.6rem;
+    }
+
+    .iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    .address {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+
+      /* font-size: 16px; */
+      border-radius: 10px 10px 0 0;
+
+      /* display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center; */
+
+      box-sizing: border-box;
+      padding: 20px;
+      text-align: left;
+      word-break: break-all;
+
+      background: -webkit-linear-gradient(left top, #5e62ea, #5139e9);
+      /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(bottom right, #5e62ea, #5139e9);
+      background: -moz-linear-gradient(bottom right, #5e62ea, #5139e9);
+      background: linear-gradient(to bottom right, #5e62ea, #5139e9);
+
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .register {
+      padding-bottom: 0.3rem;
+      color: #8bd566;
+    }
+
+    .unitAddress {
+      line-height: 0.6rem;
+    }
+
+    .unitName {
+      padding-bottom: 0.3rem;
+      line-height: 0.6rem;
+    }
+
+    .mask {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .pop-wrapper {
+      position: absolute;
+      width: 7.33rem;
+      margin: 0 auto;
+      border-radius: 0.21rem;
+      background: #ffffff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .pop-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 1.17rem;
+      height: 1.17rem;
+      background: url(img/icon_close.png) no-repeat;
+    }
+
+    .pop-icon {
+      display: inline-block;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: url(img/icon_warnning.png) no-repeat;
+      background-size: 100% 100%;
+      margin-top: 1.39rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pop-title {
+      font-size: 0.53rem;
+      color: #333333;
+      margin-bottom: 0.32rem;
+    }
+
+    .pop-des {
+      font-size: 0.37rem;
+      color: #999999;
+      margin-bottom: 0.75rem;
+    }
+
+    .pop-confirm {
+      width: 4.67rem;
+      height: 1.07rem;
+      line-height: 1.07rem;
+      margin: 0 auto 0.75rem;
+      border: 1px solid #999999;
+      border-radius: 0.53rem;
+      font-size: 0.48rem;
+      color: #666666;
+    }
+
+    #loading {
+      z-index: 999;
+    }
+
+    .loading {
+      position: absolute;
+      width: 7.33rem;
+      height: 7.33rem;
+      line-height: 7.33rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* background-color: rgba(0, 0, 0, .8); */
+      /* border-radius: 15px; */
+      /* text-align: center; */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loading div {
+      height: 1.3rem;
+      font-size: 0.4rem;
+      color: #409eff;
+    }
+
+    .loading span {
+      display: inline-block;
+      vertical-align: middle;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
+      border: 2px solid #409eff;
+      border-top-color: transparent;
+      -webkit-transform-origin: right bottom;
+      -webkit-animation: load 1s linear infinite;
+    }
+
+    .loading span:last-child {
+      margin-right: 0px;
+    }
+
+    @-webkit-keyframes load {
+      0% {
+        transform: rotate(0deg);
+        transform-origin: center;
+      }
+
+      100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform-origin: center;
+      }
+    }
+  </style>
+  <style>
+    @charset "utf-8";
+    html {
+      color: #000;
+      background: #fff;
+      overflow-y: scroll;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    html * {
+      outline: 0;
+      -webkit-text-size-adjust: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    html,
+    body {
+      font-family: sans-serif;
+    }
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    form,
+    fieldset,
+    legend,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td,
+    hr,
+    button,
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      margin: 0;
+      padding: 0;
+    }
+    input,
+    select,
+    textarea {
+      font-size: 100%;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    fieldset,
+    img {
+      border: 0;
+    }
+    abbr,
+    acronym {
+      border: 0;
+      font-variant: normal;
+    }
+    del {
+      text-decoration: line-through;
+    }
+    address,
+    caption,
+    cite,
+    code,
+    dfn,
+    em,
+    th,
+    var {
+      font-style: normal;
+      font-weight: 500;
+    }
+    ol,
+    ul {
+      list-style: none;
+    }
+    caption,
+    th {
+      text-align: left;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 100%;
+      font-weight: 500;
+    }
+    q:before,
+    q:after {
+      content: "";
+    }
+    sub,
+    sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+    sup {
+      top: -0.5em;
+    }
+    sub {
+      bottom: -0.25em;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ins,
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px">
+  <div id="loading" style="display: none">
+    <div class="loading">
+      <div>系统加载中，请耐心等待···</div>
+      <span></span>
+    </div>
+  </div>
+  <div class="root" style="display: block">
+    <div class="content">
+      <div class="address">
+        <div class="register">登记成功</div>
+        <div class="unitName">场所名称：<span id="unitName"></span></div>
+        <div class="unitAddress">场所地址：<span id="unitAddress"></span></div>
+        <script>
+          setUnit();
+        </script>
+      </div>
+      <iframe
+        name="iframe"
+        id="iframe"
+        width="100%"
+        height="100%"
+        src="main.html"
+      ></iframe>
+    </div>
+  </div>
+</body>

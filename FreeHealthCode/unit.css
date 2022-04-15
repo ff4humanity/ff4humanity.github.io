@@ -1,0 +1,28 @@
+/* https://m.mynj.cn:11100/activity/unit_code_new2/css/global.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+}
+
+html,
+body {
+  height: 100%;
+  /* font-size: 15px; */
+  color: #333333;
+  font-family: "Poppins", sans-serif;
+  vertical-align: baseline;
+  line-height: 20px;
+}
+
+html {
+  font-size: 39.3091px;
+}
+
+/* custom */
+
+.address {
+	user-select: none;
+}

@@ -28,7 +28,7 @@ body,
   font-size: 150%;
   border-bottom: 1px solid blue;
   user-select: none;
-  padding: 5px 0;
+  padding: 5px;
 }
 
 .header > * {
@@ -36,10 +36,13 @@ body,
 }
 
 .return {
-  visibility: hidden;
 }
 
 .title {
   flex: 100;
   text-align: center;
+}
+
+img {
+  height: 24px;
 }

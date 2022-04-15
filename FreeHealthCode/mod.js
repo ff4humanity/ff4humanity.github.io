@@ -1,12 +1,21 @@
+const pages = {
+  "xck.html": { title: "通信大数据行程卡", type: 1 },
+  "unit.html": { title: "场所码", type: 2 },
+  "qr.html": { title: "扫码", type: 3 },
+  default: { title: "苏康码", type: 0 },
+};
+
 window.addEventListener("load", () => {
-  let page = location.href.indexOf("/xck.html") != -1 ? 1 : 0;
+  let page = pages[location.pathname.slice(1)] || pages.default;
   try {
-    window.top.setTitle(page ? "通信大数据行程卡" : "苏康码");
+    window.top.setTitle(page.title);
   } catch (e) {}
 
-  if (page) {
+  if (page.type == 1) {
     document.querySelector("#update-time").innerHTML = format2();
-  } else {
+  } else if (page.type == 3) {
+    qr();
+  } else if (page.type == 0) {
     // text length: 160-180
     var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
       170,
@@ -181,4 +190,146 @@ function displayPhone() {
     0,
     3
   )}****${phone.slice(-4)}`;
+}
+
+function setUnit() {
+  displayUnit();
+  var items = [
+    {
+      name: "删除当前场所",
+      fn: deleteUnit,
+    },
+    {
+      name: "删除所有场所",
+      fn: deleteAllUnits,
+    },
+    {
+      name: "新增场所",
+      fn: addUnit,
+    },
+  ];
+  var menu = new ContextMenu(".address", items);
+  document.querySelector(".address").addEventListener("dblclick", toggleUnit);
+}
+
+function displayUnit() {
+  document.querySelector("#unitName").innerHTML =
+    localStorage.getItem("unitName") || "";
+  document.querySelector("#unitAddress").innerHTML =
+    localStorage.getItem("unitAddress") || "";
+}
+
+function deleteAllUnits() {
+  if (!confirm("确认删除所有场所？")) {
+    return;
+  }
+  localStorage.setItem("unitName", "");
+  localStorage.setItem("unitAddress", "");
+  localStorage.setItem("units", "[]");
+  displayUnit();
+}
+
+function deleteUnit() {
+  let unitName = localStorage.getItem("unitName") || "";
+  let unitAddress = localStorage.getItem("unitAddress") || "";
+  if (!unitName) {
+    return;
+  }
+  if (!confirm(`删除当前场所 ${unitName} ？`)) {
+    return;
+  }
+  let units = getUnits();
+  try {
+    let index = units.findIndex((unit) => unit.startsWith(unitName + "|"));
+    if (index == -1) {
+      return;
+    }
+    units.splice(index, 1);
+    localStorage.setItem("units", JSON.stringify(units));
+    let unit =
+      units.length > 0
+        ? index < units.length
+          ? units[index]
+          : units[0]
+        : null;
+    if (unit) {
+      [unitName, unitAddress] = unit.split("|");
+    } else {
+      unitName = unitAddress = "";
+    }
+    localStorage.setItem("unitName", unitName);
+    localStorage.setItem("unitAddress", unitAddress);
+    displayUnit();
+  } catch (e) {}
+}
+
+function addUnit() {
+  let unitName, unitAddress;
+  (unitName = prompt("新增场所名称", "")) &&
+    (unitAddress = prompt(`${unitName} 场所的地址`, ""));
+  if (!unitName || !unitAddress) {
+    return;
+  }
+  let units = getUnits();
+  try {
+    units.push(unitName + "|" + unitAddress);
+    localStorage.setItem("unitName", unitName);
+    localStorage.setItem("unitAddress", unitAddress);
+    localStorage.setItem("units", JSON.stringify(units));
+    displayUnit();
+  } catch (e) {}
+}
+
+function toggleUnit() {
+  let unitName = localStorage.getItem("unitName") || "";
+  let unitAddress = localStorage.getItem("unitAddress") || "";
+  let units = getUnits();
+  try {
+    let index = unitName
+      ? units.findIndex((unit) => unit.startsWith(unitName + "|"))
+      : -1;
+    if (index != -1) {
+      index = (index + 1) % units.length;
+    } else if (units.length) {
+      index = 0;
+    }
+    if (index != -1) {
+      [unitName, unitAddress] = units[index].split("|");
+    } else {
+      unitName = unitAddress = "";
+    }
+    localStorage.setItem("unitName", unitName);
+    localStorage.setItem("unitAddress", unitAddress);
+    displayUnit();
+  } catch (e) {}
+}
+
+function getUnits() {
+  let units = [];
+  try {
+    units = JSON.parse(localStorage.getItem("units"));
+    if (!Array.isArray(units)) {
+      units = [];
+    }
+  } catch (e) {}
+  return units;
+}
+
+async function qr() {
+  const video = document.querySelector("video");
+
+  const constraints = {
+    video: {
+      facingMode: "environment",
+    },
+    audio: false,
+  };
+  const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  video.srcObject = stream;
+  await sleep(1500);
+  location.href = "unit.html";
+}
+
+function sleep(miliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, miliseconds));
 }
