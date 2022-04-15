@@ -6,7 +6,9 @@ const pages = {
 };
 
 window.addEventListener("load", () => {
-  let page = pages[location.pathname.slice(1)] || pages.default;
+  let page =
+    pages[location.pathname.slice(location.pathname.lastIndexOf("/") + 1)] ||
+    pages.default;
   try {
     window.top.setTitle(page.title);
   } catch (e) {}
