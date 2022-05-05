@@ -21,8 +21,39 @@ html {
   font-size: 39.3091px;
 }
 
+.skip {
+  width: 5rem;
+  height: 1rem;
+  background-color: #fff;
+  margin: 0.3rem auto;
+  border-radius: 0.2rem;
+  line-height: 1rem;
+  text-align: center;
+  color: #333;
+  font-size: 0.4rem;
+}
+
+.triangle1 {
+  width: 0px;
+  height: 0px;
+  border-top: 0.3rem solid #fff;
+  border-left: 0.3rem solid transparent;
+  border-right: 0.3rem solid transparent;
+  margin: 0 auto 0.3rem;
+}
+
+.triangle2 {
+  width: 0px;
+  height: 0px;
+  display: none;
+  border-bottom: 0.3rem solid #fff;
+  border-left: 0.3rem solid transparent;
+  border-right: 0.3rem solid transparent;
+  margin: 0 auto 0.3rem;
+}
+
 /* custom */
 
 .address {
-	user-select: none;
+  user-select: none;
 }

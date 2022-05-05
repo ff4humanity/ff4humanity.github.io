@@ -2,6 +2,7 @@ const pages = {
   "xck.html": { title: "通信大数据行程卡", type: 1 },
   "unit.html": { title: "场所码", type: 2 },
   "qr.html": { title: "扫码", type: 3 },
+  "hs.html": { title: "苏康码", type: 4 },
   default: { title: "苏康码", type: 0 },
 };
 
@@ -266,9 +267,23 @@ function deleteUnit() {
 }
 
 function addUnit() {
-  let unitName, unitAddress;
-  (unitName = prompt("新增场所名称", "")) &&
-    (unitAddress = prompt(`${unitName} 场所的地址`, ""));
+  let unitInfo = prompt(`请输入场所的名称和地址(使用 "," 或 "|" 分割)`, "");
+  if (!unitInfo) {
+    return;
+  }
+  let [unitName, unitAddress] = unitInfo.split(/\s*[,，|]\s*/);
+  if (!unitAddress) {
+    let index = unitInfo.lastIndexOf("江苏");
+    if (index == -1) {
+      index = unitInfo.lastIndexOf("南京");
+    }
+    if (index > 0) {
+      unitName = unitInfo.slice(0, index);
+      unitAddress = unitInfo.slice(index);
+    }
+  }
+  unitName = unitName.trim();
+  unitAddress = unitAddress.trim();
   if (!unitName || !unitAddress) {
     return;
   }
@@ -334,4 +349,102 @@ async function qr() {
 
 function sleep(miliseconds) {
   return new Promise((resolve) => setTimeout(resolve, miliseconds));
+}
+
+function setYm() {
+  document.querySelector("#ym-layout").addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    let ym = (parseInt(localStorage.getItem("ym") || 0) + 1) % 2;
+    localStorage.setItem("ym", ym);
+    displayYm();
+  });
+  displayYm();
+}
+
+function setHstatus() {
+  document.querySelector("#hs-layout").addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    let hstatus = (parseInt(localStorage.getItem("hstatus") || 0) + 1) % 2;
+    localStorage.setItem("hstatus", hstatus);
+    displayHstatus();
+  });
+  displayHstatus();
+}
+
+function displayYm() {
+  let ym = parseInt(localStorage.getItem("ym") || 0);
+  document.querySelector("#ym-layout").classList.remove("ym-0", "ym-1");
+  document.querySelector("#ym-layout").classList.add("ym-" + ym);
+}
+
+function displayHstatus() {
+  let hstatus = parseInt(localStorage.getItem("hstatus") || 0);
+  document.querySelector("#hs-layout").classList.remove("hs-0", "hs-1");
+  document.querySelector("#hs-layout").classList.add("hs-" + hstatus);
+}
+
+function displayHsBasicInfo() {
+  let name = localStorage.getItem("name") || "刘洋";
+  let code = localStorage.getItem("code") || "";
+  let code1 = code.length >= 6 ? code.slice(0, 6) : "320101";
+  let code2 = code.length >= 3 ? code.slice(-3) : "042";
+  document.querySelector(".code1").innerHTML = code1;
+  document.querySelector(".code2").innerHTML = code2;
+  Array.from(document.querySelectorAll(".name")).forEach(
+    (el) => (el.innerHTML = name)
+  );
+}
+
+function getHs() {
+  let hs = [];
+  try {
+    hs = JSON.parse(localStorage.getItem("hs"));
+    if (!Array.isArray(hs)) {
+      hs = [];
+    }
+  } catch (e) {}
+  return hs;
+}
+
+function setHs() {
+  displayHs();
+  Array.from(document.querySelectorAll(".loc")).forEach((el) => {
+    el.addEventListener("dblclick", (ev) => {
+      let hs = getHs();
+      let index = ev.target.dataset.index;
+      let loc = prompt("采样点:", hs[index]?.[0] || "");
+      if (!loc) {
+        return;
+      }
+      hs[index] = hs[index] || [];
+      hs[index][0] = loc;
+      localStorage.setItem("hs", JSON.stringify(hs));
+      displayHs();
+    });
+  });
+  Array.from(document.querySelectorAll(".time")).forEach((el) => {
+    el.addEventListener("dblclick", (ev) => {
+      let hs = getHs();
+      let index = ev.target.dataset.index;
+      let time = prompt("采样时间(yyyy-MM-dd HH:mm):", hs[index]?.[1] || "");
+      if (!time) {
+        return;
+      }
+      hs[index] = hs[index] || [];
+      hs[index][1] = time;
+      localStorage.setItem("hs", JSON.stringify(hs));
+      displayHs();
+    });
+  });
+}
+
+function displayHs() {
+  displayHsBasicInfo();
+  let hs = getHs();
+  Array.from(document.querySelectorAll(".loc")).forEach((el) => {
+    el.innerHTML = hs[el.dataset.index]?.[0] || "社区采样点";
+  });
+  Array.from(document.querySelectorAll(".time")).forEach((el) => {
+    el.innerHTML = hs[el.dataset.index]?.[1] || "2022-05-01 20:00";
+  });
 }
