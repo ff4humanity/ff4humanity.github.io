@@ -67,9 +67,13 @@ window.addEventListener("load", () => {
         });
       }
     );
-    document.querySelector("#hsjcJSBtn").addEventListener("click", (el) => {
-      window.location.href = "hs.html";
-    });
+    Array.from(document.querySelectorAll("#hsjcJSBtn, #hsjcBtn")).forEach(
+      (el) => {
+        el.addEventListener("click", (el) => {
+          window.location.href = "hs.html";
+        });
+      }
+    );
 
     setPhone();
     setPersonalInfo();
