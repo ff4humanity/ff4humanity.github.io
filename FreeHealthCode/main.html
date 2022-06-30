@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="mod.css" />
     <script src="jquery.min.js"></script>
     <script src="jquery.qrcode.min.js"></script>
-    <script src="mod.js"></script>
   </head>
   <body>
+    <script src="mod.js"></script>
     <div class="wrapper">
       <div class="title-pic">
         <div class="icons">
@@ -24,138 +24,218 @@
       </div>
       <form class="" id="codes">
         <div class="pic">
-          <div class="icons"></div>
+          <div class="icons">
+            <div class="icon"></div>
+            <div>苏康码<span id="codecolor">·绿码</span></div>
+            <div class="tel" id="code-name" data-fhcvalue="name"></div>
+          </div>
           <div class="code-name">
-            <div id="code-name">刘洋</div>
-            <div id="code-id">
-              <span id="code1"></span>******<span id="code2"></span>
-              <script>
-                setPersonalInfo();
-              </script>
-            </div>
+            <div id="code-tel" data-fhcvalue="phone"></div>
+            <div id="code-id" data-fhcvalue="code"></div>
+          </div>
+        </div>
+        <div class="gxts-layout">
+          <div>
+            <p class="gxts">
+              若您有近14天中高风险地区旅居史(含境外)请及时信息更新和风险报备。
+            </p>
           </div>
         </div>
         <div class="code-layout">
           <div class="shadow-layout">
-            <p class="text-center hidden" id="now-time">00-00 00:00:00</p>
+            <p class="text-center" id="now-time">06-30 09:32:55</p>
             <div id="ymjz">
               <div class="codeimg"></div>
-              <div class="ymjzimg"></div>
-              <div id="output" class=""></div>
-            </div>
-            <!-- <div class="uncityData">
-              <div style="display: flex; justify-content: space-between">
-                <div class="tips">
-                  <p class="love hide"></p>
-                  <p class="star"></p>
-                  <span class="green" id="codes-text">
-                    绿色：勤洗手、常通风、戴口罩，出现发热咳嗽等症状请及时就医
-                  </span>
-                </div>
-              </div>
-            </div> -->
-            <p id="rjmj"></p>
-            <p id="jjgl" class="hide"></p>
-          </div>
-        </div>
-        <div class="hsym-layout uncityData">
-          <div class="hs-layout">
-            <div class="shadow-layout-hsym hs-0" id="hs-layout">
-              <script>
-                setHstatus();
-              </script>
-              <div class="hsym-title">核酸(省内)</div>
-              <div class="hsym-contont" id="hs-content">
-                <div class="hs-result">
-                  <div>48</div>
-                  <div>小时<br />阴性</div>
-                </div>
-                <div class="no-hsym">暂未查询到数据</div>
-              </div>
-              <div class="hsym-footer">
-                <div class="turn-right-icon"></div>
-                <span id="hs-footer">右滑刷新</span>
+              <div
+                id="output"
+                aria-label="绿码"
+                role="img"
+                style="cursor: pointer"
+                class=""
+              >
               </div>
             </div>
-          </div>
-          <div class="ym-layout">
-            <div class="shadow-layout-hsym ym-0" id="ym-layout">
-              <script>
-                setYm();
-              </script>
-              <div class="hsym-title">新冠疫苗</div>
-              <div class="hsym-contont" id="ym-content">
-                <div class="ym-result">已加强接种</div>
-                <div class="no-hsym">暂未查询到数据</div>
-              </div>
-              <div class="hsym-footer">
-                <span id="ym-footer">左滑刷新</span>
-                <div class="turn-left-icon"></div>
-              </div>
+            <div class="uncityData">
+              <div class="tips"><p class="green" id="codes-text"></p></div>
+              <p id="remainDays"></p>
+              <p id="rjmj"></p>
+              <p id="jjgl"></p>
+            </div>
+            <div class="cityData hide">
+              <p class="red">
+                如需使用苏康码相关功能，请
+                <span id="cityDataSubmit">更新信息</span>
+              </p>
             </div>
           </div>
         </div>
-        <div class="xingcheng uncityData">
-          <div class="shadow-layout" id="xingchengBtn">
-            <div class="xingcheng-layout">
-              <div class="xingcheng-pic"></div>
-              <div><a href="xck.html">通信大数据行程卡</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="bottom-layout uncityData">
-          <div class="shadow-layout">
-            <div class="fxbb">
-              <div class="fxsb-layout border-right" id="goAdd">
-                <div class="bottoms-pic addhea"></div>
-                <div class="fxsb-center">
-                  <p class="fxsb-right-top">风险报备</p>
+        <div class="slider-layout">
+          <div class="stop-center" id="slider-sz" style="">
+            <div class="slider-left">
+              <div class="hs-list">
+                <div class="shadow-layout">
+                  <div id="hs-list" class="border-bottom">
+                    <div>
+                      <span>采样点：</span><span data-fhcvalue="latesthsloc"></span>
+                    </div>
+                    <div>
+                      <span>采样时间：</span><span data-fhcvalue="latesthstime"></span>
+                    </div>
+                    <div>
+                      <span>检测结果：</span
+                      ><span style="font-weight: bold; color: rgb(0, 201, 2)"
+                        >阴性</span
+                      >
+                    </div>
+                  </div>
+                  <p class="hs-tip">
+                    数据来源：江苏省卫生健康委员会，反映近30天内最近一次核酸检测情况，数据在不断汇聚和完善中。
+                  </p>
                 </div>
-              </div>
-              <div class="fxsb-layout" id="reSubmit">
-                <div class="bottoms-pic updata"></div>
-                <div class="fxsb-center">
-                  <p class="fxsb-right-top">信息更新</p>
+                <div class="hsym-shadow-layout">
+                  <div class="slider-btn" id="hsjcJSBtn">
+                    <div class="hs-detail"></div>
+                    核酸检测所有信息
+                  </div>
+                </div>
+                <div class="hsym-shadow-layout hs-goback">
+                  <div class="slider-btn">
+                    <div class="hsym-back"></div>
+                    返回主页面
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="bottoms-btns">
-              <div id="addChildBtn">
-                <div class="bottoms-pic addchild"></div>
-                <p>家庭成员</p>
+            <div class="slider-center">
+              <div class="hsym-refresh">
+                <div></div>
+                更新
               </div>
-              <div id="hsjcBtn">
-                <a href="hs.html"><div class="bottoms-pic kangti"></div></a>
-                <p>核酸/抗体<br />检测查询(全国)</p>
+              <div class="hsym-layout uncityData">
+                <div class="hs-layout">
+                  <div
+                    data-fhcvalue="hstatus"
+                    class="shadow-layout-hsym hs48hours-border"
+                    id="hs-layout"
+                  >
+                    <div class="hsym-title">核酸(省内)</div>
+                    <div class="hsym-contont" id="hs-content">
+                      <div class="hs48hours" data-fhchstatus="0">
+                        <div>48</div>
+                        <div>小时<br />阴性</div>
+                      </div>
+                      <div class="no-hsym" data-fhchstatus="1">暂未查询到数据</div>
+                    </div>
+                    <div class="hsym-footer">
+                      <div class="turn-right-icon"></div>
+                      <span id="hs-footer">右滑刷新</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="ym-layout" data-fhcvalue="ym">
+                  <div class="shadow-layout-hsym ym3-border" id="ym-layout">
+                    <div class="hsym-title">新冠疫苗</div>
+                    <div class="hsym-contont" id="ym-content">
+                      <div class="ym-result">已加强接种</div>
+                      <div class="no-hsym">暂未查询到数据</div>
+                    </div>
+                    <div class="hsym-footer">
+                      <span id="ym-footer">左滑查看</span>
+                      <div class="turn-left-icon"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div id="queryChinaBtn">
-                <div class="bottoms-pic guo"></div>
-                <p>国家防疫<br />健康信息码</p>
+              <div class="xingcheng uncityData">
+                <div class="shadow-layout" id="xingchengBtn">
+                  <div class="xingcheng-layout">
+                    <div class="xingcheng-pic"></div>
+                    <div>通信大数据行程卡</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bottom-layout uncityData">
+                <div class="shadow-layout">
+                  <div class="fxbb">
+                    <div class="fxsb-layout border-right" id="goAdd">
+                      <div class="bottoms-pic addhea"></div>
+                      <div class="fxsb-center">
+                        <p class="fxsb-right-top">风险报备</p>
+                      </div>
+                    </div>
+                    <div class="fxsb-layout" id="reSubmit">
+                      <div class="bottoms-pic updata"></div>
+                      <div class="fxsb-center">
+                        <p class="fxsb-right-top">信息更新</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bottoms-btns">
+                    <div id="addChildBtn">
+                      <div class="bottoms-pic addchild"></div>
+                      <p>家庭成员</p>
+                    </div>
+                    <div id="hsjcBtn">
+                      <div class="bottoms-pic kangti"></div>
+                      <p>核酸/抗体<br />检测查询(全国)</p>
+                    </div>
+                    <div id="xgymqgBtn">
+                      <div class="bottoms-pic yimiao"></div>
+                      <p>新冠疫苗<br />接种查询(全国)</p>
+                    </div>
+                    <div id="queryChinaBtn">
+                      <div class="bottoms-pic guo"></div>
+                      <p>国家防疫<br />健康信息码</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="gwyxckcx uncityData">
+                <div class="shadow-layout" data-fhcvalue="xcstatus">
+                  <div class="gwyxckcx-layout">
+                    <div class="gwyxck-btn-layout">
+                      <div class="gwyxck-btn">点击核验</div>
+                    </div>
+                    <div class="gwyxckcx-center">
+                      <p class="gwyxckcx-right-top gwyxck-name">
+                        国务院行程卡查询
+                      </p>
+                      <p class="gwyxck-btns">今日未核验</p>
+                      <p class="gwyxck-tip1">
+                        您14天内未到访过中高风险地区所在城市
+                      </p>
+                      <p class="gwyxck-tip2">
+                        您14天内到达或途径过中高风险地区所在城市(不表示实际到访过这些中高风险地区)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="sjly">
+                <a
+                  href="http://www.jszwfw.gov.cn/jmopen/webapp/html5/sjly/index.html"
+                  >数据来源:全国一体化政务服务平台、个人申报信息和江苏省公共管理机构。</a
+                >
+              </p>
+            </div>
+            <div class="slider-right">
+              <div class="ym-list">
+                <div class="shadow-layout">
+                  <div class="xgym-modal"></div>
+                  <p class="hs-tip">
+                    数据来源：江苏省预防接种综合服务管理信息系统，仅可查询江苏省内的新冠疫苗接种信息。
+                  </p>
+                </div>
+                <div class="hsym-shadow-layout ym-goback">
+                  <div class="slider-btn">
+                    <div class="hsym-back"></div>
+                    返回主页面
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="gwyxckcx">
-          <script>
-            setXc();
-          </script>
-          <div class="shadow-layout">
-            <div class="gwyxck-btn">点击核验</div>
-            <p class="gwyxck-name">国务院行程卡查询</p>
-            <div class="gwyxck-btns">今日未核验</div>
-            <p class="gwyxck-tip1">您14天内未到访过中高风险地区所在城市</p>
-            <p class="gwyxck-tip2">
-              您14天内到达或途径过中高风险地区所在城市(不表示实际到访过这些中高风险地区)
-            </p>
-          </div>
-        </div>
-        <p class="sjly">
-          <a
-            href="http://www.jszwfw.gov.cn/jmopen/webapp/html5/sjly/index.html"
-          >
-            数据来源:全国一体化政务服务平台、个人申报信息和江苏省公共管理机构。
-          </a>
-        </p>
       </form>
     </div>
     <div class="jsm-footer">

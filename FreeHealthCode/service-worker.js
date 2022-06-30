@@ -6,7 +6,7 @@ workbox.setConfig({
 });
 
 const { precacheAndRoute } = workbox.precaching;
-const VERSION = 10;
+const VERSION = 11;
 const URL_PREFIX = location.pathname.slice(0, -"service-worker.js".length - 1);
 
 const FILES = [
@@ -56,6 +56,9 @@ const FILES = [
   "/src/turn-left2.png",
   "/src/turn-right2.png",
   "/src/xxgx.png",
+  "/src/hours.png",
+  "/src/hs-detail.png",
+  "/src/hsym-back.png",
 ];
 
 precacheAndRoute(

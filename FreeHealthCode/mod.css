@@ -1,25 +1,60 @@
+body.hs-0 .hs-layout .hs48hours {
+  display: none;
+}
+
+body.hs-1 .hs-layout .no-hsym {
+  display: none;
+}
+
+body.hs-0 .hs-layout > .shadow-layout-hsym.hs48hours-border {
+  padding: unset !important;
+  border: unset !important;
+  color: unset !important;
+  box-shadow: unset !important;
+  border-radius: unset !important;
+}
+
+body.ym-0 .ym-layout .ym-result {
+  display: none;
+}
+
+body.ym-1 .ym-layout .no-hsym {
+  display: none;
+}
+
+body.ym-0 .ym-layout > .shadow-layout-hsym.ym3-border {
+  padding: unset !important;
+  border: unset !important;
+  border-radius: unset !important;
+  color: unset !important;
+  box-shadow: unset !important;
+}
+
+.hs-layout,
+.ym-layout,
+.gwyxckcx-layout,
 #code-name,
 #code-id {
   user-select: none;
 }
 
-.gwyxck-btn,
-.gwyxck-btns,
-.gwyxck-tip1,
-.gwyxck-tip2 {
+.gwyxckcx-layout .gwyxck-btn,
+.gwyxckcx-layout .gwyxck-btns,
+.gwyxckcx-layout .gwyxck-tip1,
+.gwyxckcx-layout .gwyxck-tip2 {
   display: none;
 }
 
-.xc-0 .gwyxck-btn,
-.xc-0 .gwyxck-btns {
+body.xc-0 .gwyxckcx-layout .gwyxck-btn,
+body.xc-0 .gwyxckcx-layout .gwyxck-btns {
   display: block;
 }
 
-.xc-1 .gwyxck-tip1 {
+body.xc-1 .gwyxckcx-layout .gwyxck-tip1 {
   display: block;
 }
 
-.xc-2 .gwyxck-tip2 {
+body.xc-2 .gwyxckcx-layout .gwyxck-tip2 {
   display: block;
 }
 

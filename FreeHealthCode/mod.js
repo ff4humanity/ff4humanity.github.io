@@ -6,6 +6,8 @@ const pages = {
   default: { title: "苏康码", type: 0 },
 };
 
+document.body.classList.add("hs-0", "ym-0");
+
 window.addEventListener("load", () => {
   let page =
     pages[location.pathname.slice(location.pathname.lastIndexOf("/") + 1)] ||
@@ -18,6 +20,10 @@ window.addEventListener("load", () => {
     document.querySelector("#update-time").innerHTML = format2();
   } else if (page.type == 3) {
     qr();
+  } else if (page.type == 4) {
+    document.querySelector("#return-btn").addEventListener("click", () => {
+      window.location.href = "main.html";
+    });
   } else if (page.type == 0) {
     // text length: 160-180
     var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
@@ -41,10 +47,40 @@ window.addEventListener("load", () => {
     document.querySelector("#xingchengBtn").addEventListener("click", () => {
       window.location.href = "xck.html";
     });
+
+    document
+      .querySelector(".hs-layout .hsym-footer")
+      .addEventListener("click", () => {
+        document
+          .querySelector("#slider-sz")
+          .classList.remove("stop-center", "stop-right");
+        document.querySelector("#slider-sz").classList.add("stop-left");
+      });
+
+    Array.from(document.querySelectorAll(".hs-goback .slider-btn")).forEach(
+      (el) => {
+        el.addEventListener("click", () => {
+          document
+            .querySelector("#slider-sz")
+            .classList.remove("stop-left", "stop-right");
+          document.querySelector("#slider-sz").classList.add("stop-center");
+        });
+      }
+    );
+    document.querySelector("#hsjcJSBtn").addEventListener("click", (el) => {
+      window.location.href = "hs.html";
+    });
+
+    setPhone();
+    setPersonalInfo();
+    setHstatus();
+    setYm();
+    setXc();
+    displayLatestHs();
   }
 });
 
-function getBeijingTime() {
+function getBeijingTime(offset = 0) {
   // create Date object for current location
   var d = new Date();
   // convert to msec
@@ -52,7 +88,7 @@ function getBeijingTime() {
   // get UTC time in msec
   var utc = d.getTime() + d.getTimezoneOffset() * 60000;
   // get utc+8 time
-  return new Date(utc + 3600000 * 8);
+  return new Date(utc + 3600000 * 8 + offset);
 }
 
 function format(e) {
@@ -73,6 +109,14 @@ function format(e) {
     ":" +
     i.toString().padStart(2, "0")
   );
+}
+
+function formatDate(a) {
+  a = a || getBeijingTime();
+  let yyyy = a.getFullYear(),
+    MM = (a.getMonth() + 1).toString().padStart(2, "0"),
+    dd = a.getDate().toString().padStart(2, "0");
+  return `${yyyy}-${MM}-${dd}`;
 }
 
 function format2(a) {
@@ -110,22 +154,26 @@ function setPersonalInfo() {
   }
   displayPersonalInfo(name, code);
 
-  document.querySelector("#code-name").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    name = prompt("更改姓名为：", name || "");
-    if (name !== null) {
-      localStorage.setItem("name", name);
-      displayPersonalInfo(name, code);
-    }
-  });
-  document.querySelector("#code-id").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    code = prompt("更改 id 为：", code || "");
-    if (code !== null) {
-      localStorage.setItem("code", code);
-      displayPersonalInfo(name, code);
-    }
-  });
+  document
+    .querySelector('*[data-fhcvalue="name"]')
+    .addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      name = prompt("更改姓名为：", name || "");
+      if (name !== null) {
+        localStorage.setItem("name", name);
+        displayPersonalInfo(name, code);
+      }
+    });
+  document
+    .querySelector('*[data-fhcvalue="code"]')
+    .addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      code = prompt("更改 id 为：", code || "");
+      if (code !== null) {
+        localStorage.setItem("code", code);
+        displayPersonalInfo(name, code);
+      }
+    });
 }
 
 function displayPersonalInfo(name, code) {
@@ -133,25 +181,29 @@ function displayPersonalInfo(name, code) {
   code = code || "";
   let code1 = code.length >= 6 ? code.slice(0, 3) : "320";
   let code2 = code.length >= 3 ? code.slice(-3) : "042";
-  document.querySelector("#code-name").innerHTML = name;
-  document.querySelector("#code1").innerHTML = code1;
-  document.querySelector("#code2").innerHTML = code2;
+  document.querySelector('*[data-fhcvalue="name"]').innerHTML = name;
+  document.querySelector(
+    '*[data-fhcvalue="code"]'
+  ).innerHTML = `${code1}******${code2}`;
 }
 
 function setXc() {
-  document.querySelector(".gwyxckcx").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    let xc = (parseInt(localStorage.getItem("xc") || 0) + 1) % 3;
-    localStorage.setItem("xc", xc);
+  let xcEl = document.querySelector('*[data-fhcvalue="xcstatus"]');
+  if (xcEl) {
+    xcEl.addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      let xc = (parseInt(localStorage.getItem("xc") || 0) + 1) % 3;
+      localStorage.setItem("xc", xc);
+      displayXc();
+    });
     displayXc();
-  });
-  displayXc();
+  }
 }
 
 function displayXc() {
   let xc = parseInt(localStorage.getItem("xc") || 0);
-  document.querySelector(".gwyxckcx").classList.remove("xc-0", "xc-1", "xc-2");
-  document.querySelector(".gwyxckcx").classList.add("xc-" + xc);
+  document.body.classList.remove("xc-0", "xc-1", "xc-2");
+  document.body.classList.add("xc-" + xc);
 }
 
 function setArea() {
@@ -176,20 +228,22 @@ function displayArea() {
 }
 
 function setPhone() {
-  document.querySelector("#phone").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    let phone = prompt("更改手机号为：", localStorage.getItem("phone") || "");
-    if (phone != null && phone != localStorage.getItem("phone")) {
-      localStorage.setItem("phone", phone);
-      displayPhone();
-    }
-  });
+  document
+    .querySelector('*[data-fhcvalue="phone"]')
+    .addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      let phone = prompt("更改手机号为：", localStorage.getItem("phone") || "");
+      if (phone != null && phone != localStorage.getItem("phone")) {
+        localStorage.setItem("phone", phone);
+        displayPhone();
+      }
+    });
   displayPhone();
 }
 
 function displayPhone() {
   let phone = localStorage.getItem("phone") || "15000000042";
-  document.querySelector("#phone").innerHTML = `${phone.slice(
+  document.querySelector('*[data-fhcvalue="phone"]').innerHTML = `${phone.slice(
     0,
     3
   )}****${phone.slice(-4)}`;
@@ -343,7 +397,7 @@ async function qr() {
   };
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
   video.srcObject = stream;
-  await sleep(1500);
+  await sleep(1000);
   location.href = "unit.html";
 }
 
@@ -352,42 +406,48 @@ function sleep(miliseconds) {
 }
 
 function setYm() {
-  document.querySelector("#ym-layout").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    let ym = (parseInt(localStorage.getItem("ym") || 0) + 1) % 2;
-    localStorage.setItem("ym", ym);
+  let ymEl = document.querySelector('*[data-fhcvalue="ym"]');
+  if (ymEl) {
+    ymEl.addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      let ym = (parseInt(localStorage.getItem("ym") || 0) + 1) % 2;
+      localStorage.setItem("ym", ym);
+      displayYm();
+    });
     displayYm();
-  });
-  displayYm();
+  }
 }
 
 function setHstatus() {
-  document.querySelector("#hs-layout").addEventListener("dblclick", (e) => {
-    e.stopPropagation();
-    let hstatus = (parseInt(localStorage.getItem("hstatus") || 0) + 1) % 2;
-    localStorage.setItem("hstatus", hstatus);
+  let hstatusEl = document.querySelector('*[data-fhcvalue="hstatus"]');
+  if (hstatusEl) {
+    hstatusEl.addEventListener("dblclick", (e) => {
+      e.stopPropagation();
+      let hstatus = (parseInt(localStorage.getItem("hstatus") || 0) + 1) % 2;
+      localStorage.setItem("hstatus", hstatus);
+      displayHstatus();
+    });
     displayHstatus();
-  });
-  displayHstatus();
+  }
 }
 
 function displayYm() {
   let ym = parseInt(localStorage.getItem("ym") || 0);
-  document.querySelector("#ym-layout").classList.remove("ym-0", "ym-1");
-  document.querySelector("#ym-layout").classList.add("ym-" + ym);
+  document.body.classList.remove("ym-0", "ym-1");
+  document.body.classList.add("ym-" + ym);
 }
 
 function displayHstatus() {
   let hstatus = parseInt(localStorage.getItem("hstatus") || 0);
-  document.querySelector("#hs-layout").classList.remove("hs-0", "hs-1");
-  document.querySelector("#hs-layout").classList.add("hs-" + hstatus);
+  document.body.classList.remove("hs-0", "hs-1");
+  document.body.classList.add("hs-" + hstatus);
 }
 
 function displayHsBasicInfo() {
   let name = localStorage.getItem("name") || "刘洋";
   let code = localStorage.getItem("code") || "";
   let code1 = code.length >= 6 ? code.slice(0, 6) : "320101";
-  let code2 = code.length >= 3 ? code.slice(-3) : "042";
+  let code2 = code.length >= 4 ? code.slice(-4) : "0042";
   document.querySelector(".code1").innerHTML = code1;
   document.querySelector(".code2").innerHTML = code2;
   Array.from(document.querySelectorAll(".name")).forEach(
@@ -438,13 +498,36 @@ function setHs() {
   });
 }
 
+const fakeHsTimes = {
+  0: "20:01",
+  1: "20:24",
+  2: "20:42",
+  3: "20:58",
+  4: "21:23",
+};
+
 function displayHs() {
   displayHsBasicInfo();
   let hs = getHs();
+  let defaultLoc = hs[0]?.[0] || "社区采样点";
   Array.from(document.querySelectorAll(".loc")).forEach((el) => {
-    el.innerHTML = hs[el.dataset.index]?.[0] || "社区采样点";
+    el.innerHTML = hs[el.dataset.index]?.[0] || defaultLoc;
   });
-  Array.from(document.querySelectorAll(".time")).forEach((el) => {
-    el.innerHTML = hs[el.dataset.index]?.[1] || "2022-05-01 20:00";
+  Array.from(document.querySelectorAll(".time")).forEach((el, i) => {
+    let faketime =
+      formatDate(getBeijingTime(-86400 * 1000 * (1 + i * 2))) +
+      " " +
+      (hs[i] && hs[i][1] ? hs[i][1].slice(-5) : fakeHsTimes[i]);
+    el.innerHTML = hs[i] && hs[i][1] > faketime ? hs[i][1] : faketime;
   });
+}
+
+function displayLatestHs() {
+  let hs = getHs();
+  document.querySelector('*[data-fhcvalue="latesthsloc"]').innerHTML =
+    hs[0]?.[0] || "社区采样点";
+  let faketime =
+    formatDate(getBeijingTime(-86400 * 1000)) + " " + fakeHsTimes[0];
+  document.querySelector('*[data-fhcvalue="latesthstime"]').innerHTML =
+    hs[0] && hs[0][1] > faketime ? hs[0][1] : faketime;
 }
