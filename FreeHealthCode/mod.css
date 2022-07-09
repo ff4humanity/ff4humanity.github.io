@@ -32,6 +32,7 @@ body.ym-0 .ym-layout > .shadow-layout-hsym.ym3-border {
 
 .hs-layout,
 .ym-layout,
+.gwyxckcx,
 .gwyxckcx-layout,
 #code-name,
 #code-id {
@@ -60,7 +61,7 @@ body.xc-2 .gwyxckcx-layout .gwyxck-tip2 {
 
 #area {
   color: black !important;
-  /* font-weight: bold !important; */
+  font-weight: bold !important;
 }
 
 .bott {
