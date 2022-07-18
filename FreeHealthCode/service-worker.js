@@ -6,7 +6,7 @@ workbox.setConfig({
 });
 
 const { precacheAndRoute } = workbox.precaching;
-const VERSION = 11;
+const VERSION = 12;
 const URL_PREFIX = location.pathname.slice(0, -"service-worker.js".length - 1);
 
 const FILES = [
