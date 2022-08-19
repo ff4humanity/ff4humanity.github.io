@@ -26,10 +26,12 @@ window.addEventListener("load", () => {
     });
   } else if (page.type == 0) {
     // text length: 160-180
-    var o = "https://h5.dingtalk.com/healthAct/index.html?qrCode=".padEnd(
-      170,
-      encodeURIComponent("Liberate Hong Kong, the revolution of our times")
-    );
+    var o = `https://h5.dingtalk.com/healthAct/index.html?qrCode=V${randomStr(
+      39,
+      1
+    )}&b=u${randomStr(4, 1)}${randomStr(2)}%2B${randomStr(29)}%2B${randomStr(
+      26
+    )}#/result`;
     $("#output").qrcode({
       render: "canvas",
       text: o,
@@ -534,4 +536,18 @@ function displayLatestHs() {
     formatDate(getBeijingTime(-86400 * 1000)) + " " + fakeHsTimes[0];
   document.querySelector('*[data-fhcvalue="latesthstime"]').innerHTML =
     hs[0] && hs[0][1] > faketime ? hs[0][1] : faketime;
+}
+
+function randomStr(length, type) {
+  let result = "";
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  if (type == 1) {
+    characters = "0123456789abcdef";
+  }
+  let charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }

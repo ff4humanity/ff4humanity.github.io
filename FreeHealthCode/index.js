@@ -20,11 +20,15 @@
       );
       registration && (await registration.unregister());
       let cacheNames = await caches.keys();
-      cacheNames.forEach((cacheName) => {
-        caches.delete(cacheName);
-      });
+      for (let i = 0; i < cacheNames.length; i++) {
+        await caches.delete(cacheNames[i]);
+      }
       alert("已清除缓存。请重新刷新页面");
     });
+  document.querySelector(".title span").addEventListener("contextmenu", (e) => {
+    location.href =
+      document.querySelector("iframe").contentWindow.location.href;
+  });
   navigator.serviceWorker.register(`${rootpath}service-worker.js`, {
     scope: rootpath,
   });
