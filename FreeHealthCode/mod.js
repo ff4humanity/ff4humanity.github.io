@@ -50,14 +50,18 @@ window.addEventListener("load", () => {
       window.location.href = "xck.html";
     });
 
+    function toggleHs() {
+      document
+        .querySelector("#slider-sz")
+        .classList.remove("stop-center", "stop-right");
+      document.querySelector("#slider-sz").classList.add("stop-left");
+    }
     document
       .querySelector(".hs-layout .hsym-footer")
-      .addEventListener("click", () => {
-        document
-          .querySelector("#slider-sz")
-          .classList.remove("stop-center", "stop-right");
-        document.querySelector("#slider-sz").classList.add("stop-left");
-      });
+      .addEventListener("click", toggleHs);
+    document
+      .querySelector(".hs-layout .hsym-footer")
+      .addEventListener("touchend", toggleHs);
 
     Array.from(document.querySelectorAll(".hs-goback .slider-btn")).forEach(
       (el) => {
@@ -504,13 +508,28 @@ function setHs() {
   });
 }
 
-const fakeHsTimes = {
-  0: "20:01",
-  1: "20:24",
-  2: "20:42",
-  3: "20:58",
-  4: "21:23",
-};
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // [min,max)
+}
+
+// randtime(20, 4) => [20:00:00, 23:59:59)
+function randtime(startHour = 0, hourlen = 24) {
+  let seconds = getRandomInt(0, hourlen * 3600);
+  let hours = Math.floor(seconds / 3600);
+  let remaining = seconds % 3600;
+  let minutes = Math.floor(remaining / 60);
+  hours = (startHour + hours) % 24;
+  seconds = remaining % 60;
+  return `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+}
+
+function fakeHsTime(type = 0) {
+  return type == 1 ? randtime(20, 4) : randtime(20, 8);
+}
 
 function displayHs() {
   displayHsBasicInfo();
@@ -523,7 +542,7 @@ function displayHs() {
     let faketime =
       formatDate(getBeijingTime(-86400 * 1000 * (1 + i * 2))) +
       " " +
-      (hs[i] && hs[i][1] ? hs[i][1].slice(-5) : fakeHsTimes[i]);
+      (hs[i] && hs[i][1] ? hs[i][1].slice(-8) : fakeHsTime(+(i == 0)));
     el.innerHTML = hs[i] && hs[i][1] > faketime ? hs[i][1] : faketime;
   });
 }
@@ -533,7 +552,7 @@ function displayLatestHs() {
   document.querySelector('*[data-fhcvalue="latesthsloc"]').innerHTML =
     hs[0]?.[0] || "社区采样点";
   let faketime =
-    formatDate(getBeijingTime(-86400 * 1000)) + " " + fakeHsTimes[0];
+    formatDate(getBeijingTime(-86400 * 1000)) + " " + fakeHsTime(1);
   document.querySelector('*[data-fhcvalue="latesthstime"]').innerHTML =
     hs[0] && hs[0][1] > faketime ? hs[0][1] : faketime;
 }

@@ -640,3 +640,7 @@ a {
   display: inline-block;
   margin-bottom: 8px;
 }
+
+.list-container-item1 .time {
+  color: red !important;
+}
