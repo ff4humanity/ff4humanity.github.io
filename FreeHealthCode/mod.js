@@ -7,7 +7,7 @@ const pages = {
 };
 const DEFAULT_AREA = "江苏省南京市";
 // window.__wm : running in web archive (https://archive.org/web/)
-const USE_HASH = !!window.__wm || !!getHashParams("hash");
+const USE_HASH = location.host == "web.archive.org" || !!getHashParams("hash");
 
 document.body.classList.add("hs-0", "ym-0");
 
