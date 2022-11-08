@@ -2,12 +2,20 @@
 
 ## FreeHealthCode
 
-[https://ff4humanity.github.io/FreeHealthCode/](https://ff4humanity.github.io/FreeHealthCode/)
+地址: [https://ff4humanity.github.io/FreeHealthCode/](https://ff4humanity.github.io/FreeHealthCode/)
+
+匿名访问地址: [https://web.archive.org/web/20221108090312id_/https://ff4humanity.github.io/FreeHealthCode/](https://web.archive.org/web/20221108090312id_/https://ff4humanity.github.io/FreeHealthCode/)
+
 
 模拟的 “苏康码”（中国江苏省的新型冠状病毒防控健康码）、“通信大数据行程卡”以及江苏省南京市本地的“场所码”页面。提取自相应小程序的官方页面，拟真度 100%。
 
 支持 PWA，可以在手机上用 Chrome 添加到桌面后离线使用。
 
+## 匿名访问说明
+
+本模拟 “苏康码”是纯静态页面，不会收集任何信息或向任何服务器发送网络请求。然而，您的 ISP 很可能知道您访问了本服务（除非您全程使用代理(并且必须使用代理远程解析域名)，或者浏览器和操作系统支持并启用了 [ECH](https://blog.cloudflare.com/encrypted-client-hello/) 和 [DoT](https://en.wikipedia.org/wiki/DNS_over_TLS)）。如果您需要做到完全匿名访问本页面，可以通过上面的“匿名访问地址”通过 [Internet Archive](https://archive.org/web/) 的存档服务访问本页面。
+
+匿名访问模式下，您在本页面里配置的所有个人信息（姓名、手机号、证件号等）均会保存在 URL 的 hash 部分。可以配置好后直接保存当前页面为浏览器书签。
 
 ## 使用说明
 
