@@ -14,12 +14,54 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <div class="return">
-          <a href="main.html" target="main"><img src="src/home.svg" /></a>
-        </div>
-        <div class="title"><span>苏康码</span></div>
-        <div class="qr">
-          <a href="qr.html" target="main"><img src="src/qr_scan.svg" /></a>
+        <view class="weui-navigation-bar">
+          <view
+            class="weui-navigation-bar__placeholder"
+            style="visibility: hidden"
+          ></view>
+          <view
+            class="weui-navigation-bar__inner"
+            style="color: #000; background: #fff"
+          >
+            <view class="weui-navigation-bar__left" style="width: var(--right)">
+              <view class="weui-navigation-bar__buttons home">
+                <view
+                  bindtap="back"
+                  class="weui-navigation-bar__button weui-navigation-bar__btn_goback"
+                ></view>
+              </view>
+            </view>
+            <view class="weui-navigation-bar__center">
+              <span class="title"></span>
+            </view>
+            <view class="weui-navigation-bar__right"></view>
+          </view>
+        </view>
+        <div class="capsule qr">
+          <svg
+            class="capsule-menu-icon"
+            viewBox="0 0 64 28"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="32" cy="14" r="9.5"></circle>
+            <circle cx="54" cy="14" r="6"></circle>
+            <circle cx="10" cy="14" r="6"></circle>
+          </svg>
+          <div class="splitter"></div>
+          <svg
+            class="capsule-exit-icon"
+            viewBox="0 0 60 60"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="30" cy="30" r="9"></circle>
+            <circle
+              cx="30"
+              cy="30"
+              r="23"
+              stroke-width="6"
+              fill="transparent"
+            ></circle>
+          </svg>
         </div>
       </div>
       <iframe name="main" src="main.html"></iframe>

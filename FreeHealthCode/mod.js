@@ -1,10 +1,13 @@
 const pages = {
-  "xck.html": { title: "通信大数据行程卡", type: 1 },
+  "xck.html": { title: "通信行程卡", type: 1 },
   "unit.html": { title: "场所码", type: 2 },
   "qr.html": { title: "扫码", type: 3 },
   "hs.html": { title: "苏康码", type: 4 },
   default: { title: "苏康码", type: 0 },
 };
+const DEFAULT_AREA = "江苏省南京市";
+// window.__wm : running in web archive (https://archive.org/web/)
+const USE_HASH = !!window.__wm || !!getHashParams("hash");
 
 document.body.classList.add("hs-0", "ym-0");
 
@@ -141,8 +144,8 @@ function format2(a) {
 }
 
 function setPersonalInfo() {
-  let name = localStorage.getItem("name");
-  let code = localStorage.getItem("code");
+  let name = getState("name");
+  let code = getState("code");
 
   let search = location.search;
   try {
@@ -155,11 +158,11 @@ function setPersonalInfo() {
   let queryCode = searchParams.get("code");
 
   if (queryName && queryName !== name) {
-    localStorage.setItem("name", queryName);
+    setState("name", queryName);
     name = queryName;
   }
   if (queryCode && queryCode !== code) {
-    localStorage.setItem("code", queryCode);
+    setState("code", queryCode);
     code = queryCode;
   }
   displayPersonalInfo(name, code);
@@ -170,7 +173,7 @@ function setPersonalInfo() {
       e.stopPropagation();
       name = prompt("更改姓名为：", name || "");
       if (name !== null) {
-        localStorage.setItem("name", name);
+        setState("name", name);
         displayPersonalInfo(name, code);
       }
     });
@@ -180,7 +183,7 @@ function setPersonalInfo() {
       e.stopPropagation();
       code = prompt("更改 id 为：", code || "");
       if (code !== null) {
-        localStorage.setItem("code", code);
+        setState("code", code);
         displayPersonalInfo(name, code);
       }
     });
@@ -202,8 +205,8 @@ function setXc() {
   if (xcEl) {
     xcEl.addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let xc = (parseInt(localStorage.getItem("xc") || 0) + 1) % 3;
-      localStorage.setItem("xc", xc);
+      let xc = (parseInt(getState("xc") || 0) + 1) % 3;
+      setState("xc", xc);
       displayXc();
     });
     displayXc();
@@ -211,7 +214,7 @@ function setXc() {
 }
 
 function displayXc() {
-  let xc = parseInt(localStorage.getItem("xc") || 0);
+  let xc = parseInt(getState("xc") || 0);
   document.body.classList.remove("xc-0", "xc-1", "xc-2");
   document.body.classList.add("xc-" + xc);
 }
@@ -219,9 +222,9 @@ function displayXc() {
 function setArea() {
   document.querySelector("#area").addEventListener("dblclick", (e) => {
     e.stopPropagation();
-    let area = prompt("更改区域为：", localStorage.getItem("area") || "");
-    if (area != null && area != localStorage.getItem("area")) {
-      localStorage.setItem("area", area);
+    let area = prompt("更改区域为：", getState("area") || DEFAULT_AREA);
+    if (area != null && area != getState("area")) {
+      setState("area", area);
       displayArea();
     }
   });
@@ -229,12 +232,8 @@ function setArea() {
 }
 
 function displayArea() {
-  let area = localStorage.getItem("area") || "江苏省南京市";
-  let xc = parseInt(localStorage.getItem("xc") || 0);
-  document.querySelector("#area").innerHTML =
-    xc != 2
-      ? area
-      : `${area}*（注：*表示当前该城市存在中风险或高风险地区，并不表示用户实际到访过这些中高风险地区。）`;
+  let area = getState("area") || DEFAULT_AREA;
+  document.querySelector("#area").innerHTML = area;
 }
 
 function setPhone() {
@@ -242,9 +241,9 @@ function setPhone() {
     .querySelector('*[data-fhcvalue="phone"]')
     .addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let phone = prompt("更改手机号为：", localStorage.getItem("phone") || "");
-      if (phone != null && phone != localStorage.getItem("phone")) {
-        localStorage.setItem("phone", phone);
+      let phone = prompt("更改手机号为：", getState("phone") || "");
+      if (phone != null && phone != getState("phone")) {
+        setState("phone", phone);
         displayPhone();
       }
     });
@@ -252,7 +251,7 @@ function setPhone() {
 }
 
 function displayPhone() {
-  let phone = localStorage.getItem("phone") || "15000000042";
+  let phone = getState("phone") || "15000000042";
   document.querySelector('*[data-fhcvalue="phone"]').innerHTML = `${phone.slice(
     0,
     3
@@ -280,25 +279,24 @@ function setUnit() {
 }
 
 function displayUnit() {
-  document.querySelector("#unitName").innerHTML =
-    localStorage.getItem("unitName") || "";
+  document.querySelector("#unitName").innerHTML = getState("unitName") || "";
   document.querySelector("#unitAddress").innerHTML =
-    localStorage.getItem("unitAddress") || "";
+    getState("unitAddress") || "";
 }
 
 function deleteAllUnits() {
   if (!confirm("确认删除所有场所？")) {
     return;
   }
-  localStorage.setItem("unitName", "");
-  localStorage.setItem("unitAddress", "");
-  localStorage.setItem("units", "[]");
+  setState("unitName", "");
+  setState("unitAddress", "");
+  setState("units", "[]");
   displayUnit();
 }
 
 function deleteUnit() {
-  let unitName = localStorage.getItem("unitName") || "";
-  let unitAddress = localStorage.getItem("unitAddress") || "";
+  let unitName = getState("unitName") || "";
+  let unitAddress = getState("unitAddress") || "";
   if (!unitName) {
     return;
   }
@@ -312,7 +310,7 @@ function deleteUnit() {
       return;
     }
     units.splice(index, 1);
-    localStorage.setItem("units", JSON.stringify(units));
+    setState("units", JSON.stringify(units));
     let unit =
       units.length > 0
         ? index < units.length
@@ -324,8 +322,8 @@ function deleteUnit() {
     } else {
       unitName = unitAddress = "";
     }
-    localStorage.setItem("unitName", unitName);
-    localStorage.setItem("unitAddress", unitAddress);
+    setState("unitName", unitName);
+    setState("unitAddress", unitAddress);
     displayUnit();
   } catch (e) {}
 }
@@ -354,16 +352,16 @@ function addUnit() {
   let units = getUnits();
   try {
     units.push(unitName + "|" + unitAddress);
-    localStorage.setItem("unitName", unitName);
-    localStorage.setItem("unitAddress", unitAddress);
-    localStorage.setItem("units", JSON.stringify(units));
+    setState("unitName", unitName);
+    setState("unitAddress", unitAddress);
+    setState("units", JSON.stringify(units));
     displayUnit();
   } catch (e) {}
 }
 
 function toggleUnit() {
-  let unitName = localStorage.getItem("unitName") || "";
-  let unitAddress = localStorage.getItem("unitAddress") || "";
+  let unitName = getState("unitName") || "";
+  let unitAddress = getState("unitAddress") || "";
   let units = getUnits();
   try {
     let index = unitName
@@ -379,8 +377,8 @@ function toggleUnit() {
     } else {
       unitName = unitAddress = "";
     }
-    localStorage.setItem("unitName", unitName);
-    localStorage.setItem("unitAddress", unitAddress);
+    setState("unitName", unitName);
+    setState("unitAddress", unitAddress);
     displayUnit();
   } catch (e) {}
 }
@@ -388,7 +386,7 @@ function toggleUnit() {
 function getUnits() {
   let units = [];
   try {
-    units = JSON.parse(localStorage.getItem("units"));
+    units = JSON.parse(getState("units"));
     if (!Array.isArray(units)) {
       units = [];
     }
@@ -420,8 +418,8 @@ function setYm() {
   if (ymEl) {
     ymEl.addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let ym = (parseInt(localStorage.getItem("ym") || 0) + 1) % 2;
-      localStorage.setItem("ym", ym);
+      let ym = (parseInt(getState("ym") || 0) + 1) % 2;
+      setState("ym", ym);
       displayYm();
     });
     displayYm();
@@ -433,8 +431,8 @@ function setHstatus() {
   if (hstatusEl) {
     hstatusEl.addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let hstatus = (parseInt(localStorage.getItem("hstatus") || 0) + 1) % 2;
-      localStorage.setItem("hstatus", hstatus);
+      let hstatus = (parseInt(getState("hstatus") || 0) + 1) % 2;
+      setState("hstatus", hstatus);
       displayHstatus();
     });
     displayHstatus();
@@ -442,20 +440,20 @@ function setHstatus() {
 }
 
 function displayYm() {
-  let ym = parseInt(localStorage.getItem("ym") || 0);
+  let ym = parseInt(getState("ym") || 0);
   document.body.classList.remove("ym-0", "ym-1");
   document.body.classList.add("ym-" + ym);
 }
 
 function displayHstatus() {
-  let hstatus = parseInt(localStorage.getItem("hstatus") || 0);
+  let hstatus = parseInt(getState("hstatus") || 0);
   document.body.classList.remove("hs-0", "hs-1");
   document.body.classList.add("hs-" + hstatus);
 }
 
 function displayHsBasicInfo() {
-  let name = localStorage.getItem("name") || "刘洋";
-  let code = localStorage.getItem("code") || "";
+  let name = getState("name") || "刘洋";
+  let code = getState("code") || "";
   let code1 = code.length >= 6 ? code.slice(0, 6) : "320101";
   let code2 = code.length >= 4 ? code.slice(-4) : "0042";
   document.querySelector(".code1").innerHTML = code1;
@@ -468,7 +466,7 @@ function displayHsBasicInfo() {
 function getHs() {
   let hs = [];
   try {
-    hs = JSON.parse(localStorage.getItem("hs"));
+    hs = JSON.parse(getState("hs"));
     if (!Array.isArray(hs)) {
       hs = [];
     }
@@ -488,7 +486,7 @@ function setHs() {
       }
       hs[index] = hs[index] || [];
       hs[index][0] = loc;
-      localStorage.setItem("hs", JSON.stringify(hs));
+      setState("hs", JSON.stringify(hs));
       displayHs();
     });
   });
@@ -502,7 +500,7 @@ function setHs() {
       }
       hs[index] = hs[index] || [];
       hs[index][1] = time;
-      localStorage.setItem("hs", JSON.stringify(hs));
+      setState("hs", JSON.stringify(hs));
       displayHs();
     });
   });
@@ -569,4 +567,49 @@ function randomStr(length, type) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+function setState(key, value) {
+  if (typeof key == "object") {
+    Object.keys(key).forEach((k) => {
+      setState(k, key[k]);
+    });
+    return;
+  }
+  if (USE_HASH) {
+    let params = getHashParams();
+    params.set(key, value);
+    try {
+      window.top.location.hash = "#" + params.toString();
+    } catch (e) {
+      location.hash = "#" + params.toString();
+    }
+  } else {
+    localStorage.setItem(key, value);
+  }
+}
+
+function getState(key) {
+  if (USE_HASH) {
+    return getHashParams(key);
+  } else {
+    return localStorage.getItem(key);
+  }
+}
+
+function getHashParams(key) {
+  let hash = "";
+  try {
+    hash = window.top.location.hash;
+  } catch (e) {
+    hash = location.hash;
+  }
+  if (hash[0] == "#") {
+    hash = hash.slice(1);
+  }
+  let params = new URLSearchParams(hash);
+  if (key) {
+    params = params.get(key);
+  }
+  return params;
 }
