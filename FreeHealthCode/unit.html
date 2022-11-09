@@ -20,12 +20,6 @@
       display: none;
       width: 100vw;
       height: 100vh;
-      /* display: flex; */
-      /* position: fixed; */
-      /* top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0; */
     }
 
     .content {
@@ -43,26 +37,15 @@
       position: fixed;
       bottom: 0;
       width: 100vw;
-
-      /* font-size: 16px; */
       border-radius: 10px 10px 0 0;
-
-      /* display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center; */
-
       box-sizing: border-box;
       padding: 20px;
       text-align: left;
       word-break: break-all;
-
       background: -webkit-linear-gradient(left top, #5e62ea, #5139e9);
-      /* Safari 5.1 - 6.0 */
       background: -o-linear-gradient(bottom right, #5e62ea, #5139e9);
       background: -moz-linear-gradient(bottom right, #5e62ea, #5139e9);
       background: linear-gradient(to bottom right, #5e62ea, #5139e9);
-
       color: #fff;
       font-size: 20px;
     }
@@ -157,9 +140,6 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      /* background-color: rgba(0, 0, 0, .8); */
-      /* border-radius: 15px; */
-      /* text-align: center; */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -336,20 +316,14 @@
 </head>
 <body style="font-size: 12px">
   <script src="mod.js"></script>
-  <div id="loading" style="display: none">
-    <div class="loading">
-      <div>系统加载中，请耐心等待···</div>
-      <span></span>
-    </div>
-  </div>
   <div class="root" style="display: block">
     <div class="content">
       <div class="address">
         <div class="triangle1"></div>
         <div class="triangle2"></div>
         <div class="register">登记成功</div>
-        <div class="unitName">场所名称：<span id="unitName"></span></div>
-        <div class="unitAddress">场所地址：<span id="unitAddress"></span></div>
+        <div class="unitName"><span id="unitName"></span></div>
+        <div class="unitAddress"><span id="unitAddress"></span></div>
         <div class="skip">来访登记</div>
         <script>
           setUnit();
