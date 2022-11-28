@@ -6,8 +6,7 @@ const pages = {
   default: { title: "苏康码", type: 0 },
 };
 const DEFAULT_AREA = "江苏省南京市";
-// window.__wm : running in web archive (https://archive.org/web/)
-const USE_HASH = location.host == "web.archive.org" || !!getHashParams("hash");
+const USE_HASH = !!getHashParams("hash");
 
 document.body.classList.add("hs-0", "ym-0");
 
@@ -28,19 +27,17 @@ window.addEventListener("load", () => {
       window.location.href = "main.html";
     });
   } else if (page.type == 0) {
-    // text length: 160-180
-    var o = `https://h5.dingtalk.com/healthAct/index.html?qrCode=V${randomStr(
-      39,
-      1
-    )}&b=u${randomStr(4, 1)}${randomStr(2)}%2B${randomStr(29)}%2B${randomStr(
-      26
-    )}#/result`;
-    $("#output").qrcode({
-      render: "canvas",
-      text: o,
-      width: "230",
-      height: "230",
-      foreground: "green",
+    displayHcode();
+    document.querySelector("#output").addEventListener("dblclick", (e) => {
+      let hcode = prompt(
+        "手工设置健康码二维码文字内容:",
+        getState("hcode") || ""
+      );
+      if (hcode == null) {
+        return;
+      }
+      setState("hcode", hcode);
+      displayHcode();
     });
 
     $("#now-time").html(format(new Date()));
@@ -104,24 +101,15 @@ function getBeijingTime(offset = 0) {
   return new Date(utc + 3600000 * 8 + offset);
 }
 
-function format(e) {
-  var a = getBeijingTime();
-  (r = (a.getFullYear(), a.getMonth() + 1)),
-    (d = a.getDate()),
-    (o = a.getHours()),
-    (t = a.getMinutes()),
-    (i = a.getSeconds());
-  return (
-    r.toString().padStart(2, "0") +
-    "-" +
-    d.toString().padStart(2, "0") +
-    " " +
-    o.toString().padStart(2, "0") +
-    ":" +
-    t.toString().padStart(2, "0") +
-    ":" +
-    i.toString().padStart(2, "0")
-  );
+function format(a) {
+  a = a || getBeijingTime();
+  let yyyy = a.getFullYear(),
+    MM = (a.getMonth() + 1).toString().padStart(2, "0"),
+    dd = a.getDate().toString().padStart(2, "0"),
+    hh = a.getHours().toString().padStart(2, "0"),
+    mm = a.getMinutes().toString().padStart(2, "0"),
+    ss = a.getSeconds().toString().padStart(2, "0");
+  return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
 }
 
 function formatDate(a) {
@@ -187,6 +175,26 @@ function setPersonalInfo() {
         displayPersonalInfo(name, code);
       }
     });
+}
+
+function displayHcode() {
+  // text length: 160-180
+  var o =
+    getState("hcode") ||
+    `https://h5.dingtalk.com/healthAct/index.html?qrCode=V${randomStr(
+      39,
+      1
+    )}&b=u${randomStr(4, 1)}${randomStr(2)}%2B${randomStr(29)}%2B${randomStr(
+      26
+    )}#/result`;
+  document.querySelector("#output").innerHTML = "";
+  $("#output").qrcode({
+    render: "canvas",
+    text: o,
+    width: "230",
+    height: "230",
+    foreground: "green",
+  });
 }
 
 function displayPersonalInfo(name, code) {
@@ -418,7 +426,7 @@ function setYm() {
   if (ymEl) {
     ymEl.addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let ym = (parseInt(getState("ym") || 0) + 1) % 2;
+      let ym = (parseInt(getState("ym") ?? 1) + 1) % 2;
       setState("ym", ym);
       displayYm();
     });
@@ -431,7 +439,7 @@ function setHstatus() {
   if (hstatusEl) {
     hstatusEl.addEventListener("dblclick", (e) => {
       e.stopPropagation();
-      let hstatus = (parseInt(getState("hstatus") || 0) + 1) % 2;
+      let hstatus = (parseInt(getState("hstatus") ?? 1) + 1) % 2;
       setState("hstatus", hstatus);
       displayHstatus();
     });
@@ -440,13 +448,13 @@ function setHstatus() {
 }
 
 function displayYm() {
-  let ym = parseInt(getState("ym") || 0);
+  let ym = parseInt(getState("ym") ?? 1);
   document.body.classList.remove("ym-0", "ym-1");
   document.body.classList.add("ym-" + ym);
 }
 
 function displayHstatus() {
-  let hstatus = parseInt(getState("hstatus") || 0);
+  let hstatus = parseInt(getState("hstatus") ?? 1);
   document.body.classList.remove("hs-0", "hs-1");
   document.body.classList.add("hs-" + hstatus);
 }
@@ -481,7 +489,7 @@ function setHs() {
       let hs = getHs();
       let index = ev.target.dataset.index;
       let loc = prompt("采样点:", hs[index]?.[0] || "");
-      if (!loc) {
+      if (loc == null) {
         return;
       }
       hs[index] = hs[index] || [];
@@ -494,8 +502,8 @@ function setHs() {
     el.addEventListener("dblclick", (ev) => {
       let hs = getHs();
       let index = ev.target.dataset.index;
-      let time = prompt("采样时间(yyyy-MM-dd HH:mm):", hs[index]?.[1] || "");
-      if (!time) {
+      let time = prompt("检测时间(yyyy-MM-dd HH:mm:ss):", hs[index]?.[1] || "");
+      if (time == null) {
         return;
       }
       hs[index] = hs[index] || [];
@@ -533,15 +541,25 @@ function displayHs() {
   displayHsBasicInfo();
   let hs = getHs();
   let defaultLoc = hs[0]?.[0] || "社区采样点";
-  Array.from(document.querySelectorAll(".loc")).forEach((el) => {
-    el.innerHTML = hs[el.dataset.index]?.[0] || defaultLoc;
-  });
-  Array.from(document.querySelectorAll(".time")).forEach((el, i) => {
+  Array.from(document.querySelectorAll(".hs")).forEach((el, i) => {
+    let locEl = el.querySelector(".loc");
+    let timeEl = el.querySelector(".time");
+    locEl.innerHTML = hs[i]?.[0] || defaultLoc;
     let faketime =
       formatDate(getBeijingTime(-86400 * 1000 * (1 + i * 2))) +
       " " +
       (hs[i] && hs[i][1] ? hs[i][1].slice(-8) : fakeHsTime(+(i == 0)));
-    el.innerHTML = hs[i] && hs[i][1] > faketime ? hs[i][1] : faketime;
+    if (hs[i] && hs[i][1] > faketime) {
+      faketime = hs[i][1];
+    }
+    timeEl.innerHTML = faketime;
+
+    el.classList.remove("list-container-item", "list-container-item1");
+    el.classList.add(
+      Math.abs(Date.parse(format()) - Date.parse(faketime)) < 86400 * 1000 * 2
+        ? "list-container-item1"
+        : "list-container-item"
+    );
   });
 }
 

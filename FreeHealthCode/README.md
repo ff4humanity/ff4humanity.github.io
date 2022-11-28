@@ -37,7 +37,8 @@
 * 双击“核酸(省内)”显示区域切换状态（暂未查询到数据、48小时阴性）。
 * 双击“新冠疫苗”显示区域切换状态（暂未查询到数据、已加强接种）。
 * 点击“核酸/抗体查询”图标显示“核酸检测结果”页面。
-  
+* 双击“健康码”可以手工设置二维码对应的文字内容。苏康码的二维码内容是 "https://h5.dingtalk.com/healthAct/index.html?qrCode=..." 格式的 URL。建议使用 [QR Scanner](https://github.com/SecUSo/privacy-friendly-qr-scanner) App 扫描本人真实健康码页面截图获取其内容。
+
 ### “通信大数据行程卡”页面
 
 * 双击“手机号”可以修改。

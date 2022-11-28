@@ -611,7 +611,11 @@ a {
   border-top: 1px solid #159000;
   border-bottom: 1px solid #159000;
 }
-.container1 .container .list-container .list-container-item1 .bg[data-v-77732afa] {
+.container1
+  .container
+  .list-container
+  .list-container-item1
+  .bg[data-v-77732afa] {
   z-index: 10;
   position: absolute;
   top: 30%;
@@ -623,17 +627,30 @@ a {
   letter-spacing: 0;
   text-align: center;
 }
-.container1 .container .list-container .list-container-item1 #hours[data-v-77732afa] {
+.container1
+  .container
+  .list-container
+  .list-container-item1
+  #hours[data-v-77732afa] {
   z-index: 70;
   position: absolute;
   right: 10px;
   top: 10px;
 }
-.container1 .container .list-container .list-container-item1 div[data-v-77732afa] {
+.container1
+  .container
+  .list-container
+  .list-container-item1
+  div[data-v-77732afa] {
   z-index: 100;
   position: relative;
 }
-.container1 .container .list-container .list-container-item1 div span[data-v-77732afa]:first-child {
+.container1
+  .container
+  .list-container
+  .list-container-item1
+  div
+  span[data-v-77732afa]:first-child {
   width: 80px;
   color: #898989;
   font-size: 16px;
@@ -643,4 +660,7 @@ a {
 
 .list-container-item1 .time {
   color: red !important;
+}
+.list-container-item #hours {
+  display: none;
 }
