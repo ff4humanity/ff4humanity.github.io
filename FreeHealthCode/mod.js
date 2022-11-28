@@ -103,6 +103,16 @@ function getBeijingTime(offset = 0) {
 
 function format(a) {
   a = a || getBeijingTime();
+  let MM = (a.getMonth() + 1).toString().padStart(2, "0"),
+    dd = a.getDate().toString().padStart(2, "0"),
+    hh = a.getHours().toString().padStart(2, "0"),
+    mm = a.getMinutes().toString().padStart(2, "0"),
+    ss = a.getSeconds().toString().padStart(2, "0");
+  return `${MM}-${dd} ${hh}:${mm}:${ss}`;
+}
+
+function formatTime(a) {
+  a = a || getBeijingTime();
   let yyyy = a.getFullYear(),
     MM = (a.getMonth() + 1).toString().padStart(2, "0"),
     dd = a.getDate().toString().padStart(2, "0"),
@@ -556,7 +566,8 @@ function displayHs() {
 
     el.classList.remove("list-container-item", "list-container-item1");
     el.classList.add(
-      Math.abs(Date.parse(format()) - Date.parse(faketime)) < 86400 * 1000 * 2
+      Math.abs(Date.parse(formatTime()) - Date.parse(faketime)) <
+        86400 * 1000 * 2
         ? "list-container-item1"
         : "list-container-item"
     );
