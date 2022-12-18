@@ -1,5 +1,4 @@
 const pages = {
-  "xck.html": { title: "通信行程卡", type: 1 },
   "unit.html": { title: "场所码", type: 2 },
   "qr.html": { title: "扫码", type: 3 },
   "hs.html": { title: "苏康码", type: 4 },
@@ -45,10 +44,6 @@ window.addEventListener("load", () => {
     setInterval(function () {
       $("#now-time").html(format(new Date()));
     }, 500);
-
-    document.querySelector("#xingchengBtn").addEventListener("click", () => {
-      window.location.href = "xck.html";
-    });
 
     function toggleHs() {
       document
